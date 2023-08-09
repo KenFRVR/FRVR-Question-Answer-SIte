@@ -11,15 +11,19 @@ Upvote and downvote answers #
 Search for questions 
 Search for answers #
 View user profiles and activity *
-Installation #
 
+Changes needed
+style the login, register and question addition views
+Complete the ads section
 
+Installation 
 Clone the repository
 Run the server: python manage.py runserver
 
 Usage
 Navigate to http://localhost:8000 in your web browser
 Register a new account or log in with an existing one
+To register a new account run: python manage.py createsuperuser and complete the registration 
 Ask and answer questions, upvote and downvote answers, and search for content
 View your profile and activity, as well as those of other users
 Contributing
