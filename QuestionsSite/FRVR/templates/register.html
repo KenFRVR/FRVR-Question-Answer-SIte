@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+<form action="" method="post">
+    {% csrf_token %}
+    {% if message %}
+        <p style="color: red">{{ message }}</p>
+    {% endif %}
+    <label for=""> Username
+        {{ form.username }}
+    </label>
+    <label for=""> Password
+        {{ form.password1 }}
+    </label>
+    <label for=""> Confirm Password
+        {{ form.password2 }}
+    </label>
+
+    <button type="submit">Sign up</button>
+</form>
+<script src=""></script>
+</body>
+</html>

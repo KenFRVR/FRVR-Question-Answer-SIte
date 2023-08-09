@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login FRVR</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/signin_signup.css' %}">
+
+</head>
+<body>
+
+{% for message in messages %}
+    <h5>{{ message }}</h5>
+{% endfor %}
+
+<div class="wrapper">
+    <div style="position: absolute; top: 0; width: 100%; background: #2ecc71;
+height: 14px; left: 0; border-top-left-radius: 8px; border-top-right-radius: 8px"></div>
+
+
+    <h1>Sign in</h1>
+
+    {% if message %}
+        <p style="color: #8b0000">{{ message }}</p>
+    {% endif %}
+
+    <form action="" method="post" class="form">
+        {% csrf_token %}
+        {{ form.username }}
+        {{ form.password }}
+
+        <div class="actions">
+            <a href="/" class="quit">View site</a>
+            <input type="submit" value="Sign in" class="btn">
+        </div>
+
+    </form>
+
+    <div class="links">
+        <p>Don't have an account yet? <a href="register">Sign up</a></p>
+        <p class="forgot">Forgot your password? Click <a href="#">here</a></p>
+    </div>
+
+    <div style="position: absolute; bottom: 0; width: 100%; background: #2ecc71;
+height: 14px; left: 0; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px"></div>
+</div>
+
+{% load static %}
+<script src="{% static 'js/login.js' %}"></script>
+</body>
+</html>

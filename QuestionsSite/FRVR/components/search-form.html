@@ -1,0 +1,6 @@
+<form action="" method="get">
+    {% csrf_token %}
+
+    <input type="text" name="query" placeholder="Search anything" value="{{ search_value }}">
+    <button type="submit">Search</button>
+</form>

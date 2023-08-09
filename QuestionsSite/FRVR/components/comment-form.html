@@ -1,0 +1,7 @@
+<form action="" method="post" class="comment-form">
+    {% csrf_token %}
+    <input type="hidden" name="question_id" value="{{ question.id }}">
+    <input type="hidden" name="counter" value="count-{{ question.id }}">
+    <input type="text" name="comment" placeholder="Your answer">
+    <button type="submit" class="comment-btn">Send</button>
+</form>

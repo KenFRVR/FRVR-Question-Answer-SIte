@@ -1,0 +1,220 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>FRVR - Search anything, find everything</title>
+
+
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+</head>
+
+<body>
+
+<header class="nav">
+    <nav>
+        <div class="logo">
+            <h1>FRVR.</h1>
+        </div>
+
+        <div class="search">
+            {% include 'components/search-form.html' %}
+        </div>
+
+        <div class="auth">
+            {% if request.user.is_authenticated %}
+                <a href="logout" class="logout-btn">
+                    <img class="logout-icon" src="{% static 'images/logout.png' %}" alt="logout">
+                </a>
+            {% else %}
+                <a href="login" class="login-btn">
+                    <img class="login-icon" src="{% static 'images/login.png' %}" alt="login">
+                </a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+
+    <aside class="left-bar" aria-label="left-bar">
+
+        <section class="profile-section">
+
+            <header class="profile-section__pictures">
+                <div class="banner-container">
+                    <img id="banner" src="{% static 'images/banner.jpg' %}" alt="Banner" width="100%">
+                </div>
+                <div class="profile-picture">
+                    <img id="profile-picture" src="{% static 'images/profile_picture.png' %}" alt="Profile picture"
+                         width="100%">
+                </div>
+            </header>
+
+            <div class="profile-section__info">
+                <div class="profile-section__info__user-container">
+                    <h3 class="profile-section__info__username">{{ request.user|title }}</h3>
+                    <p class="profile-section__info__user-bio">{{ request.user.userprofile.bio }}</p>
+                </div>
+                <div class="profile-section__info__statics-container">
+                    <div class="profile-section__info__statics-container__questions">
+                        <p>Your questions</p>
+                        {% if request.user.is_authenticated %}
+                            <span id="questions-counter">{{ question_count }}</span>
+                        {% else %}
+                            <span id="questions-counter">N/</span>
+                        {% endif %}
+                    </div>
+                    <div class="profile-section__info__statics-container__answers">
+                        <p>Your answers</p>
+                        {% if request.user.is_authenticated %}
+                            <span id="answers-counter">{{ answer_count }}</span>
+                        {% else %}
+                            <span id="answers-counter">N/</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="left-bar__tools-section">
+            <h5>Tools</h5>
+            <a href="#" class="latest">
+                <img src="{% static 'images/latest.png' %}" alt="Latest" width="20px">Latest questions
+            </a>
+            <a href="#" class="news">
+                <img src="{% static 'images/news.png' %}" alt="News" width="20px"> News
+            </a>
+        </section>
+    </aside>
+
+    <main>
+        {% if request.user.is_authenticated %}
+            <section class="ask-section">
+                <a href="create-question" class="ask-btn">Ask something &#x1F7A5;</a>
+            </section>
+        {% endif %}
+
+        <section class="questions-list">
+
+            {% for question in questions reversed %}
+
+                <article class="question" id="{{ question.id }}">
+
+                    <header>
+                        <div class="meta">
+                            <div class="info-pub">
+                                <p class="username">{{ question.user.username|title }}</p>
+                                <p class="date">{{ question.publication_date }}</p>
+                                <button class="x">&#x2A2F;</button>
+                            </div>
+                            <p class="bio">{{ question.user.userprofile.bio|truncatechars:100 }}</p>
+                        </div>
+                    </header>
+
+                    <div class="question-body">
+                        <h2 class="question-title">{{ question.title }}</h2>
+                        <p class="question-text">{{ question.summary }}</p>
+                        {% if question.too_long %}
+                            <a href="" class="read-more" data-summary="{{ question.summary }}"
+                               data-fulltext="{{ question.text }}">Read more</a>
+                        {% endif %}
+                    </div>
+
+                    <footer>
+                        <div class="comment-section-container">
+                            <section class="comment-section">
+                                <button id="{{ question.id }}" class="show-answers">
+                                    <img src="{% static 'images/comment.png' %}" alt="comment" class="comment">
+                                </button>
+
+                                <span class="count" id="count-{{ question.id }}">{{ question.answers.all.count }}</span>
+
+                            </section>
+
+                            <span class="useless">...</span>
+                        </div>
+
+                        <div class="answers" id="answers-{{ question.id }}">
+                            {% if request.user.is_authenticated %}
+                                <div class="comment-form-container">
+                                    {% include 'components/comment-form.html' %}
+                                </div>
+                            {% endif %}
+                            {% for answer in question.answers.all reversed %}
+
+                                {% if request.user.id == answer.user.id %}
+                                    <div class="comment-container right">
+                                        <p class="text right">
+                                            <span class="comment-author">{{ answer.user|title }}: </span>
+                                            {{ answer.text }}
+                                            <span class="comment-time">{{ answer.publication_date|time:"g:i A" }}</span>
+                                        </p>
+                                    </div>
+                                {% else %}
+                                    <div class="comment-container">
+                                        <p class="text left">
+                                            <span class="comment-author">{{ answer.user|title }}: </span>
+                                            {{ answer.text }}
+                                            <span class="comment-time">{{ answer.publication_date|time:"g:i A" }}</span>
+                                        </p>
+                                    </div>
+                                {% endif %}
+
+                            {% endfor %}
+                        </div>
+                    </footer>
+
+                </article>
+
+            {% endfor %}
+
+        </section>
+
+    </main>
+
+    <aside class="right-bar" aria-label="right-bar">
+
+        <section class="trends">
+            <header>
+                <h4>Trends</h4>
+                <button><img src="{% static 'images/info.png' %}" width="22px" alt="info"></button>
+            </header>
+
+            <article class="trends-list">
+                {% for question in popular_questions %}
+                    <div>
+                        <a href="#{{ question.id }}">{{ question }}</a>
+                        <p>
+                            {{ question.publication_date|timesince }}
+                            - <span>{{ question.answers.all.count }}</span> answers
+                        </p>
+                    </div>
+                {% endfor %}
+            </article>
+        </section>
+
+        <section class="ads">
+            <div class="ads-box">
+                <a href="#">ADS</a>
+            </div>
+        </section>
+
+        <footer>
+            <h6>All rights reserved &copy; 2023 FRVR</h6>
+        </footer>
+    </aside>
+
+</div>
+
+
+{% load static %}
+<script src="{% static 'js/home.js' %}"></script>
+</body>
+
+</html>

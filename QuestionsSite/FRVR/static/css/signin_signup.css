@@ -1,0 +1,176 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI Emoji", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #2ecc7166;
+}
+
+.wrapper {
+    position: relative;
+    border: 3px solid #dbdcdc;
+    padding: 2em;
+    background: #f5f5f5;
+    box-shadow: 0 2px 10px rgb(0, 0, 0, .5);
+    border-radius: 8px;
+    text-align: center;
+    transition: box-shadow .2s;
+    animation: slide-left .5s forwards;
+}
+
+
+.wrapper h1 {
+    color: #2ecc71;
+}
+
+.wrapper .quit {
+    text-decoration: none;
+    color: #2ecc71;
+    cursor: pointer;
+    border: 1px solid #2ecc71;
+    padding: .45em 3em;
+    border-radius: 4px;
+    transition: background .3s, transform .2s;
+}
+
+.quit:hover {
+    background: #fff;
+}
+
+.quit:active {
+    transform: scale(.97);
+}
+
+.wrapper form .actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: .5em;
+}
+
+form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+
+}
+
+form input:focus,
+form input:valid {
+    border-color: #2ecc71;
+}
+
+form input[type='text']:focus ~ .user,
+form input[type='text']:valid ~ .user {
+    padding: 0 .3em;
+    top: 1.9em;
+    font-size: .7em;
+    background: transparent;
+}
+
+
+form input[type='password']:focus ~ .password,
+form input[type='password']:valid ~ .password {
+    padding: 0 .3em;
+    top: 6.65em;
+    font-size: .7em;
+    background: transparent;
+}
+
+form label {
+    color: #8290a7;
+    position: absolute;
+}
+
+form .forgot {
+
+}
+
+.wrapper .links {
+    display: flex;
+    font-size: .8em;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+
+input {
+    margin: 1em;
+    border: 1px solid #dbdcdc;
+    outline: none;
+    height: 1.7em;
+    width: 90%;
+    border-radius: 4px;
+    padding: .5em 1em;
+    transition: .2s;
+}
+
+input[type='submit'] {
+    background: #2ecc71;
+    color: #fff;
+    cursor: pointer;
+    width: 9.5em;
+    box-shadow: 0 2px 6px #8ee0a6;
+    transition: background .2s, transform .2s;
+    border-radius: 4px;
+    height: 2.3em;
+    font-size: 1em;
+}
+
+input[type='submit']:hover {
+    background: #0caa50;
+}
+
+input[type='submit']:active {
+    transform: scale(.97);
+}
+
+.user {
+    transition: .3s;
+    font-size: .8em;
+    top: 2.6em;
+    left: 2.5em;
+    pointer-events: none;
+}
+
+.password {
+    transition: .3s;
+    font-size: .8em;
+    top: 6.78em;
+    left: 2.5em;
+    pointer-events: none;
+}
+
+
+.wrapper p {
+    color: #4b4c4d;
+}
+
+.wrapper p a {
+    color: #2ecc71;
+    text-decoration: none;
+    transition: color .2s;
+}
+
+.wrapper p a:hover {
+    text-decoration: underline;
+}
+
+
+@keyframes slide-left {
+    from {
+        transform: translateX(20%);
+    }
+    to {
+        transform: translateX(0);
+    }
+
+}
